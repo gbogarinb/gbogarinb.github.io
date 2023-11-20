@@ -5,8 +5,10 @@
 	import { languages } from '$lib/languages';
 	import { onMount } from 'svelte';
 	import { LightSwitch } from '@skeletonlabs/skeleton';
-	import { fade } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
 
 	let email: string = 'gbogarin@proton.me';
 	let name: string;
@@ -39,6 +41,90 @@
 		const index = languages.findIndex((l) => navigator.language.includes(l.lang));
 		selectedLang = index >= 0 ? index : 0;
 		ready = true;
+
+		setTimeout(() => {
+			gsap.from('.contact', {
+				scrollTrigger: {
+					trigger: '.contact',
+					// markers: true,
+					start: 'top bottom',
+					toggleActions: 'restart',
+					end: 'top'
+				},
+				opacity: 0,
+				duration: 1
+			});
+			gsap.from('.photo', {
+				scrollTrigger: {
+					trigger: '.photo',
+					scrub: 1
+					// markers: true
+				},
+				scale: 0.8
+			});
+
+			const tl = gsap.timeline();
+			tl.from(
+				'.title1',
+				{
+					translateX: -100
+				},
+				'<'
+			);
+			tl.from(
+				'.title2',
+				{
+					translateX: 100
+				},
+				'<'
+			);
+			tl.fromTo(
+				'.title1',
+				{
+					opacity: 0
+				},
+				{
+					opacity: 1
+				},
+				'<'
+			);
+			tl.fromTo(
+				'.title2',
+				{
+					opacity: 0
+				},
+				{
+					opacity: 1
+				},
+				'<'
+			);
+			tl.fromTo(
+				'.description',
+				{
+					opacity: 0,
+					translateY: 100
+				},
+				{
+					opacity: 1,
+					translateY: 0
+				}
+			);
+			tl.fromTo(
+				'.photo',
+				{
+					opacity: 0,
+					translateY: 10
+				},
+				{
+					opacity: 1,
+					translateY: 0,
+					duration: 0.5,
+					delay: 0.5
+				},
+				'<'
+			);
+			tl.play();
+		}, 1);
 	});
 
 	function mailto() {
@@ -64,38 +150,35 @@
 				</svelte:fragment>
 			</AppBar>
 		</svelte:fragment>
-		<section class="flex flex-col px-[10%] md:px-[20%] md:py-20 justify-center">
-			<p class="block text-7xl font-bold">
-				<span class="block" in:fade={{ delay: 300, duration: 300 }}>{lang.title1}</span>
-				<span class="block text-primary-500">{lang.title2}</span>
+		<section class="flex flex-col px-[10%] md:px-[20%] pt-20 justify-center">
+			<p class="block text-8xl font-bold">
+				<span class="block title1">{lang.title1}</span>
+				<span class="block text-primary-500 title2">{lang.title2}</span>
 			</p>
-			<p class="block text-3xl font-semibold text-left md:ml-[35%] md:p-4 p-5">
+			<p
+				class="block text-3xl font-semibold text-left md:ml-[35%] md:px-4 px-5 md:pt-4 pt-5 description"
+			>
 				<span>{lang.description1}</span>
 				<span class="font-bold text-primary-500">{lang.description2}</span>
 			</p>
 		</section>
-		<section class="flex flex-col justify-center p-[5%]">
-			<img src={ProfileImage} alt="Profile" class="filter grayscale rounded-xl" />
+		<section class="flex flex-col justify-center px-[5%]">
+			<img src={ProfileImage} alt="Profile" class="filter grayscale rounded-xl photo" />
 		</section>
 		<section>
-			<div class="flex flex-col px-[10%] md:px-[20%] md:pb-10 justify-center">
+			<div class="flex flex-col px-[10%] md:px-[20%] md:p-10 justify-center">
 				<p class="block text-5xl font-semibold text-center md:p-4 p-5">{lang.soWhatCanIDoForYou}</p>
 			</div>
 			<div class="px-[5%] flex flex-wrap">
 				{#key updateTasks}
 					{#each lang.tasks as task, index}
-						<Task
-							question={task.question}
-							answer={task.answer}
-							width={tasksWidths[index]}
-							theme={themes[index]}
-						/>
+						<Task text={task.text} width={tasksWidths[index]} theme={themes[index]} {index} />
 					{/each}
 				{/key}
 			</div>
 			<div class="p-5" />
 
-			<div class="flex flex-col justify-center items-center text-2xl">
+			<div class="flex flex-col justify-center items-center text-2xl contact">
 				<p class="block text-5xl font-semibold text-center p-10">{lang.letsGetInTouch}</p>
 				<form class="w-[70%]" on:submit|preventDefault={mailto}>
 					<label class="label space-y-2 space-y-reverse">

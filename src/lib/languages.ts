@@ -1,6 +1,5 @@
 interface Task {
-  question: string,
-  answer: string,
+  text: string,
 }
 
 interface Language {
@@ -25,7 +24,7 @@ let english: Language = {
   title2: "I'm Gustavo",
   description1: "— a software developer with more than a decade of experience",
   description2: ", ready to help you.",
-  soWhatCanIDoForYou: "So what can I do for you?",
+  soWhatCanIDoForYou: "This is what I can do",
   letsGetInTouch: "Let's get in touch",
   name: "Name",
   subject: "Subject",
@@ -34,26 +33,21 @@ let english: Language = {
   sendEmail: "Send email",
   tasks: [
     {
-      question: "Need a RESTful API?",
-      answer: "...I can do that"
+      text: "Build a RESTful API",
     },
     {
-      question: "Need an App?",
-      answer: "I can do that too!"
+      text: "Apps for Android and iOS",
     },
     {
-      question: "Need a developer account?",
-      answer: "In a second!"
+      text: "Service integrations (Firebase, Facebook, etc.)",
     }
 ,
     {
-      question: "Need help with AWS?",
-      answer: "That's my daily job!"
+      text: "Cloud services setup",
     }
 ,
     {
-      question: "Need something else?",
-      answer: "Just let me know in the form below!"
+      text: "Anything else you may need for your business",
     }
   ]
 }
@@ -63,7 +57,7 @@ let spanish: Language = {
   title2: "Soy Gustavo",
   description1: "— un desarrollador de software con más de una década de experienca",
   description2: ", listo para ayudarte.",
-  soWhatCanIDoForYou: "¿Qué puedo hacer por ti?",
+  soWhatCanIDoForYou: "Esto es lo que puedo hacer",
   letsGetInTouch: "Pongámonos en contacto",
   name: "Nombre",
   subject: "Asunto",
@@ -72,27 +66,21 @@ let spanish: Language = {
   sendEmail: "Enviar correo",
   tasks: [
     {
-      question: "¿Necesitas una RESTful API?",
-      answer: "...Yo puedo hacer eso"
+      text: "Construir una API RESTful",
     },
     {
-      question: "¿Necesitas una App?",
-      answer: "¡También puedo hacerlo!"
+      text: "Aplicaciones para Android e iOS",
     },
     {
-      question: "¿Necesitas una cuenta de desarrollo?",
-      answer: "¡En un segundo!"
-    }
-,
+      text: "Integraciones de servicios (Firebase, Facebook, etc.)",
+    },
     {
-      question: "¿Necesitas ayuda con AWS?",
-      answer: "¡Es mi trabajo de todos los días!"
-    }
-,
+      text: "Configuración de servicios en la nube",
+    },
     {
-      question: "¿Necesitas algo diferente?",
-      answer: "¡Escríbeme en el formulario de abajo!"
+      text: "Cualquier otra cosa que pueda necesitar para su negocio",
     }
-  ]
+]
+
 }
 export let languages: Language[] = [english, spanish];
