@@ -3,7 +3,6 @@
 	import powershell from 'highlight.js/lib/languages/powershell';
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
-	import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 	export let text: string;
 	export let width: string | undefined;
@@ -38,6 +37,7 @@
 <div class="p-2 w-full md:w-[{width}] {className}">
 	<pre class={theme} style="white-space:pre-wrap"><code
 			bind:this={code}
-			class="h-72 rounded-xl shadow-xl text-xl 2xl:text-5xl language-powershell">"{text}"</code
+			class="h-72 rounded-xl shadow-xl text-3xl md:text-4xl 2xl:text-5xl language-powershell"
+			>"{text}"</code
 		></pre>
 </div>
