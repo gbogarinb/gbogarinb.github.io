@@ -37,7 +37,7 @@
 		'green-screen'
 	];
 
-	onMount(() => {
+	onMount(async () => {
 		const index = languages.findIndex((l) => navigator.language.includes(l.lang));
 		selectedLang = index >= 0 ? index : 0;
 		ready = true;
@@ -125,9 +125,45 @@
 			);
 			tl.play();
 		}, 1);
+
+		// Load Google Tag Manager script asynchronously
+		const script = document.createElement('script');
+		script.async = true;
+		script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-11418853528';
+		document.head.appendChild(script);
+
+		// Initialize the dataLayer
+		window.dataLayer = window.dataLayer || [];
+
+		// Define the gtag function
+		window.gtag = function () {
+			window.dataLayer.push(arguments);
+		};
+
+		// Configure gtag with the provided ID
+		window.gtag('js', new Date());
+		window.gtag('config', 'AW-11418853528');
+
+		// Define gtag_report_conversion function
+		window.gtag_report_conversion = function (url: string | undefined): boolean {
+			const callback = function () {
+				if (typeof url !== 'undefined') {
+					window.location.href = url;
+				}
+			};
+
+			// Trigger the conversion event
+			window.gtag('event', 'conversion', {
+				send_to: 'AW-11418853528/zYi9CK-X0fgYEJjB98Qq',
+				event_callback: callback
+			});
+
+			return false;
+		};
 	});
 
 	function mailto() {
+		window.gtag_report_conversion(undefined);
 		window.location.href = `mailto:${email}?subject=${
 			subject || 'I need something'
 		}&body=${name} here. ${message}`;
